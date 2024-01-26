@@ -1,0 +1,4 @@
+[28-Nov-2023 04:01:05 UTC] PHP Fatal error:  Uncaught Error: Call to a member function make() on int in /home2/hitengroup/public_html/stock/public/index.php:49
+Stack trace:
+#0 {main}
+  thrown in /home2/hitengroup/public_html/stock/public/index.php on line 49
