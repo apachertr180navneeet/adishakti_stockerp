@@ -50,13 +50,13 @@ Route::name('admin.')->prefix('admin')->controller(LoginController::class)->grou
     Route::get('forgotpassword','forgotpassword')->name('forget.password');
     Route::post('forgotpasswordpost','forgotpasswordpost')->name('forget.password.post');
 });
-Route::name('admin.')->prefix('admin')->controller(DashboardController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(DashboardController::class)->middleware('web')->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard');
     Route::get('setting', 'setting')->name('setting');
     Route::post('setting_edit', 'edit')->name('setting.edit');
     Route::get('logout', 'logout')->name('logout');
 });
-Route::name('admin.')->prefix('admin')->controller(VendorController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(VendorController::class)->middleware('web')->group(function () {
     Route::get('vendor_list', 'index')->name('vendor.list');
     Route::get('vendor_add', 'create')->name('vendor.add');
     Route::post('vendor_store', 'store')->name('vendor.store');
@@ -65,7 +65,7 @@ Route::name('admin.')->prefix('admin')->controller(VendorController::class)->mid
     Route::delete('vendor_delete/{id}', 'delete')->name('vendor.delete');
     Route::get('vendor_status/{id}', 'status')->name('vendor.status');
 });
-Route::name('admin.')->prefix('admin')->controller(OverheadController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(OverheadController::class)->middleware('web')->group(function () {
     Route::get('overhead_list', 'index')->name('overhead.list');
     Route::get('overhead_add', 'create')->name('overhead.add');
     Route::post('overhead_store', 'store')->name('overhead.store');
@@ -74,7 +74,7 @@ Route::name('admin.')->prefix('admin')->controller(OverheadController::class)->m
     Route::delete('overhead_delete/{id}', 'delete')->name('overhead.delete');
     Route::get('overhead_status/{id}', 'status')->name('overhead.status');
 });
-Route::name('admin.')->prefix('admin')->controller(CompanyController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(CompanyController::class)->middleware('web')->group(function () {
     Route::get('company_list', 'index')->name('company.list');
     Route::get('company_add', 'create')->name('company.add');
     Route::post('company_store', 'store')->name('company.store');
@@ -83,7 +83,7 @@ Route::name('admin.')->prefix('admin')->controller(CompanyController::class)->mi
     Route::delete('company_delete/{id}', 'delete')->name('company.delete');
     Route::get('company_status/{id}', 'status')->name('company.status');
 });
-Route::name('admin.')->prefix('admin')->controller(UnitController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(UnitController::class)->middleware('web')->group(function () {
     Route::get('unit_list', 'index')->name('unit.list');
     Route::get('unit_add', 'create')->name('unit.add');
     Route::post('unit_store', 'store')->name('unit.store');
@@ -92,7 +92,7 @@ Route::name('admin.')->prefix('admin')->controller(UnitController::class)->middl
     Route::delete('unit_delete/{id}', 'delete')->name('unit.delete');
     Route::get('unit_status/{id}', 'status')->name('unit.status');
 });
-Route::name('admin.')->prefix('admin')->controller(ColorController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(ColorController::class)->middleware('web')->group(function () {
     Route::get('color_list', 'index')->name('color.list');
     Route::get('color_add', 'create')->name('color.add');
     Route::post('colort_store', 'store')->name('color.store');
@@ -101,7 +101,7 @@ Route::name('admin.')->prefix('admin')->controller(ColorController::class)->midd
     Route::delete('color_delete/{id}', 'delete')->name('color.delete');
     Route::get('color_status/{id}', 'status')->name('color.status');
 });
-Route::name('admin.')->prefix('admin')->controller(MachineController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(MachineController::class)->middleware('web')->group(function () {
     Route::get('machine_list', 'index')->name('machine.list');
     Route::get('machine_add', 'create')->name('machine.add');
     Route::post('machine_store', 'store')->name('machine.store');
@@ -111,7 +111,7 @@ Route::name('admin.')->prefix('admin')->controller(MachineController::class)->mi
     Route::get('machine_status/{id}', 'status')->name('machine.status');
 });
 
-Route::name('admin.')->prefix('admin')->controller(BatchController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(BatchController::class)->middleware('web')->group(function () {
     Route::get('batch_list', 'index')->name('batch.list');
     Route::get('batch_add', 'create')->name('batch.add');
     Route::post('batch_store', 'store')->name('batch.store');
@@ -121,7 +121,7 @@ Route::name('admin.')->prefix('admin')->controller(BatchController::class)->midd
     Route::get('batch_status/{id}', 'status')->name('batch.status');
 });
 
-Route::name('admin.')->prefix('admin')->controller(ConditionMasterController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(ConditionMasterController::class)->middleware('web')->group(function () {
     Route::get('condition_list', 'index')->name('condition.list');
     Route::get('condition_add', 'create')->name('condition.add');
     Route::post('condition_store', 'store')->name('condition.store');
@@ -130,7 +130,7 @@ Route::name('admin.')->prefix('admin')->controller(ConditionMasterController::cl
     Route::delete('condition_delete/{id}', 'delete')->name('condition.delete');
     Route::get('condition_status/{id}', 'status')->name('condition.status');
 });
-Route::name('admin.')->prefix('admin')->controller(UserController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(UserController::class)->middleware('web')->group(function () {
     Route::get('user_list', 'index')->name('user.list');
     Route::get('user_add', 'create')->name('user.add');
     Route::post('user_store', 'store')->name('user.store');
@@ -139,7 +139,7 @@ Route::name('admin.')->prefix('admin')->controller(UserController::class)->middl
     Route::delete('user_delete/{id}', 'delete')->name('user.delete');
     Route::get('user_status/{id}', 'status')->name('user.status');
 });
-Route::name('admin.')->prefix('admin')->controller(CustomerController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(CustomerController::class)->middleware('web')->group(function () {
     Route::get('customer_list', 'index')->name('customer.list');
     Route::get('customer_add', 'create')->name('customer.add');
     Route::post('customer_store', 'store')->name('customer.store');
@@ -148,7 +148,7 @@ Route::name('admin.')->prefix('admin')->controller(CustomerController::class)->m
     Route::delete('customer_delete/{id}', 'delete')->name('customer.delete');
     Route::get('customer_status/{id}', 'status')->name('customer.status');
 });
-Route::name('admin.')->prefix('admin')->controller(ItemController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(ItemController::class)->middleware('web')->group(function () {
     Route::get('item_list', 'index')->name('item.list');
     Route::get('item_add', 'create')->name('item.add');
     Route::post('item_store', 'store')->name('item.store');
@@ -157,7 +157,7 @@ Route::name('admin.')->prefix('admin')->controller(ItemController::class)->middl
     Route::delete('item_delete/{id}', 'delete')->name('item.delete');
     Route::get('item_status/{id}', 'status')->name('item.status');
 });
-Route::name('admin.')->prefix('admin')->controller(StockController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(StockController::class)->middleware('web')->group(function () {
     Route::get('stock_in_list', 'index')->name('stock.in.list');
     Route::get('stock_in_add', 'create')->name('stock.in.add');
     Route::post('stock_in_store', 'store')->name('stock.in.store');
@@ -167,7 +167,7 @@ Route::name('admin.')->prefix('admin')->controller(StockController::class)->midd
     Route::delete('stock_in_delete/{id}', 'delete')->name('stock.in.delete');
     Route::get('stock_in_status/{id}', 'status')->name('stock.in.status');
 });
-Route::name('admin.')->prefix('admin')->controller(StockDispatchController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(StockDispatchController::class)->middleware('web')->group(function () {
     Route::get('stock_dispatch_list', 'index')->name('stock.dispatch.list');
     Route::get('stock_dispatch_add', 'create')->name('stock.dispatch.add');
     Route::post('stock_dispatch_store', 'store')->name('stock.dispatch.store');
@@ -177,7 +177,7 @@ Route::name('admin.')->prefix('admin')->controller(StockDispatchController::clas
     Route::get('stock_dispatch_status/{id}', 'status')->name('stock.dispatch.status');
     Route::get('stock_dispatch_serach', 'serach')->name('stock.dispatch.serach');
 });
-Route::name('admin.')->prefix('admin')->controller(CreditNoteController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(CreditNoteController::class)->middleware('web')->group(function () {
     Route::get('credit_note_list', 'index')->name('credit.note.list');
     Route::get('credit_note_add', 'create')->name('credit.note.add');
     Route::post('credit_note_store', 'store')->name('credit.note.store');
@@ -187,7 +187,7 @@ Route::name('admin.')->prefix('admin')->controller(CreditNoteController::class)-
     Route::get('credit_note_status/{id}', 'status')->name('credit.note.status');
     Route::get('credit_note_serach', 'serach')->name('credit.note.serach');
 });
-Route::name('admin.')->prefix('admin')->controller(DebitNoteController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(DebitNoteController::class)->middleware('web')->group(function () {
     Route::get('debit_note_list', 'index')->name('debit.note.list');
     Route::get('debit_note_add', 'create')->name('debit.note.add');
     Route::post('debit_note_store', 'store')->name('debit.note.store');
@@ -197,7 +197,7 @@ Route::name('admin.')->prefix('admin')->controller(DebitNoteController::class)->
     Route::get('debit_note_status/{id}', 'status')->name('debit.note.status');
     Route::get('debit_note_serach', 'serach')->name('debit.note.serach');
 });
-Route::name('admin.')->prefix('admin')->controller(StockMaterialManagemntController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(StockMaterialManagemntController::class)->middleware('web')->group(function () {
     Route::get('stock_material_list', 'index')->name('stock.material.list');
     Route::get('stock_material_add', 'create')->name('stock.material.add');
     Route::post('stock_material_store', 'store')->name('stock.material.store');
@@ -207,7 +207,7 @@ Route::name('admin.')->prefix('admin')->controller(StockMaterialManagemntControl
     Route::get('stock_material_status/{id}', 'status')->name('stock.material.status');
     Route::get('stock_material_serach', 'serach')->name('stock.material.serach');
 });
-Route::name('admin.')->prefix('admin')->controller(StockChallanController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(StockChallanController::class)->middleware('web')->group(function () {
     Route::get('stock_challan_list', 'index')->name('stock.challan.list');
     Route::get('stock_challan_add', 'create')->name('stock.challan.add');
     Route::post('stock_challan_store', 'store')->name('stock.challan.store');
@@ -225,7 +225,7 @@ Route::name('admin.')->prefix('admin')->controller(StockChallanController::class
 
 // Report Url
 
-Route::name('admin.')->prefix('admin')->controller(StockReportController::class)->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->controller(StockReportController::class)->middleware('web')->group(function () {
     Route::get('total_stock_report', 'total_stock_report')->name('total.stock.report');
     Route::get('total_stock_report_filter', 'total_stock_report_filter')->name('total.stock.report.filter');
     Route::get('pending_order_report', 'pending_order_report')->name('pending.order.report');

@@ -1,7 +1,7 @@
 @extends('admin.layout.main_app')
 @section('title', 'Branch Master')
 @section('content')
- <!-- Content Wrapper. Contains page content -->
+            <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
