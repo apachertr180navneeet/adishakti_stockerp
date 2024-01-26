@@ -1,5 +1,5 @@
 @extends('admin.layout.main_app')
-@section('title', 'Stock In List')
+@section('title', 'Purchase Order List')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -8,13 +8,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Stock In List</h1>
+                        <h1 class="m-0">Purchase Order List</h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Stock In List</li>
+                            <li class="breadcrumb-item active">Purchase Order List</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -38,7 +38,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h3 class="card-title">Stock In List</h3>
+                                        <h3 class="card-title">Purchase Order List</h3>
                                     </div>
                                     <div class="col-md-5">
                                     </div>
@@ -77,11 +77,12 @@
                                 <table id="customer_list" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>S.no.</th>
                                             <th>Date</th>
+                                            <th>Comapny</th>
+                                            <th>PO.no.</th>
                                             <th>Vendor</th>
                                             <th>Amount</th>
-                                            <th>Quantity</th>
+                                            <th>L(gadhi)</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -91,9 +92,10 @@
                                         @endphp
                                         @foreach ($stock_list as $stock)
                                         <tr>
-                                            <td> STOCKIN-{{ $stock->id }}</td>
                                             <td>{{ $stock->stock_date }}</td>
-                                            <td>{{ $stock->name }}</td>
+                                            <td>{{ $stock->company_name }}</td>
+                                            <td> PO.No.-{{ $stock->id }}</td>
+                                            <td>{{ $stock->vendor_name }}</td>
                                             <td>{{ $stock->total_amount }}</td>
                                             <td>{{ $stock->qty }}</td>
                                             <td>

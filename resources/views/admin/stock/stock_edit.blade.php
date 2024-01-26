@@ -1,5 +1,5 @@
 @extends('admin.layout.main_app')
-@section('title', 'Stock Edit')
+@section('title', 'Purchase Order Edit')
 @section('content')
 <style>
     .totalamountmargin{
@@ -13,13 +13,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Stock Edit</h1>
+                    <h1 class="m-0">Purchase Order Edit</h1>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Stock In Edit</li>
+                        <li class="breadcrumb-item active">Purchase Order Edit</li>
                     </ol>
                 </div>
                 <!-- /.col -->
@@ -41,8 +41,8 @@
                             <input type="hidden" name="id" value="{{ $stock->id }}">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="stock_date">Stock In Bill No.</label>
-                                    <input type="text" class="form-control" value="STOCKIN-{{ $stock->id }}" />
+                                    <label for="stock_date">Purchase Order Bill No.</label>
+                                    <input type="text" class="form-control" value="PO. No.-{{ $stock->id }}" />
                                 </div>
                                 <div class="row">
                                     <div class="col">
@@ -90,12 +90,12 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <td>Item</td>
-                                            <td>Rate</td>
-                                            <td>QTY</td>
-                                            <td>Unit</td>
-                                            <td>Total Amount</td>
-                                            <td>Remove Item</td>
+                                            <td width="12%">Item</td>
+                                            <td width="8%">Rate</td>
+                                            <td width="8%">QTY</td>
+                                            <td width="8%">Unit</td>
+                                            <td width="8%">Total Amount</td>
+                                            <td width="8%">Remove</td>
                                         </tr>
                                     </thead>
                                     <tbody id="quoteTableBody">
@@ -130,22 +130,27 @@
                                 <div class="form-group mt-2">
                                     <div class="row">
                                         <div class="col">
-                                            
+
                                         </div>
                                         <div class="col">
-                                            
+
                                         </div>
                                         <div class="col">
-                                            
+
+                                        </div>
+                                        <div class="col">
+
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="number" min="0" class="form-control" placeholder="L(gadhi)" name="Lgadhi" id="Lgadhi" value="{{ $stock->gadhiL }}">
+                                            </div>
                                         </div>
                                         <div class="col totalamountmargin">
                                             <input type="input" class="form-control" id="total_amount" name="finaltotal_amount" value="{{ $stock->total_amount }}" placeholder="Final Total Amount" readonly />
                                         </div>
                                         <div class="col">
-                                            
-                                        </div>
-                                        <div class="col">
-                                            
+
                                         </div>
                                     </div>
                                 </div>

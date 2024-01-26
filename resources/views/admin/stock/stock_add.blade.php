@@ -1,5 +1,5 @@
 @extends('admin.layout.main_app')
-@section('title', 'Stock In Add')
+@section('title', 'Purchase Order Add')
 @section('content')
 <style>
     .totalamountmargin{
@@ -13,13 +13,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Stock In Add</h1>
+                        <h1 class="m-0">Purchase Order Add</h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Stock In Add</li>
+                            <li class="breadcrumb-item active">Purchase Order Add</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -99,14 +99,12 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
-                                                <input type="number" min="0" class="form-control"
-                                                    placeholder="Quantity" name="qty" id="qty">
+                                                <input type="number" min="0" class="form-control" placeholder="Quantity" name="qty" id="qty">
                                             </div>
                                             <div class="col-md-4">
-                                                <input type="number" min="0" class="form-control"
-                                                    placeholder="Rate" name="amount" id="amount">
+                                                <input type="number" min="0" class="form-control" placeholder="Rate" name="amount" id="amount">
                                             </div>
-                                            <div class="col-md-4 mt-2">
+                                            <div class="col-md-3 mt-2">
                                                 <button type="button" class="btn btn-sm btn-success" id="addQuote"> +
                                                     Add</button>
                                             </div>
@@ -120,7 +118,7 @@
                                                 <td width="8%">Rate</td>
                                                 <td width="8%">QTY</td>
                                                 <td width="8%">Unit</td>
-                                                <td width="12%">Total Amount</td>
+                                                <td width="8%">Total Amount</td>
                                                 <td width="8%">Remove</td>
                                             </tr>
                                         </thead>
@@ -144,12 +142,12 @@
 
                                             </div>
                                             <div class="col">
-
+                                                <div class="form-group">
+                                                    <input type="number" min="0" class="form-control" placeholder="L(gadhi)" name="Lgadhi" id="Lgadhi" value="100">
+                                                </div>
                                             </div>
                                             <div class="col totalamountmargin">
-                                                <input type="input" class="form-control" id="total_amount"
-                                                    name="finaltotal_amount" style="text-align:right;" value="0" placeholder="Final Total Amount"
-                                                    readonly />
+                                                <input type="input" class="form-control" id="total_amount" name="finaltotal_amount" style="text-align:right;" value="0" placeholder="Final Total Amount" readonly />
                                             </div>
                                             <div class="col">
 

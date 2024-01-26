@@ -37,7 +37,7 @@ class StockController extends Controller
         if(Auth::check()){
             $user_data = auth()->user();
 
-            $stock_list = Stock::select('stock.id','stock.stock_date','stock.total_amount','stock.qty','stock.status','users.name')->join('users', 'stock.vendor_id', '=', 'users.id')->paginate(10);
+            $stock_list = Stock::select('stock.id','stock.stock_date','stock.total_amount','stock.qty','stock.status','vendor.name AS vendor_name','company.name AS company_name')->join('users As vendor', 'stock.vendor_id', '=', 'vendor.id')->join('company', 'stock.company_id', '=', 'company.id')->paginate(10);
             $startDate = "";
             $endDate = "";
 
@@ -61,75 +61,52 @@ class StockController extends Controller
         return redirect("admin/login")->withSuccess('You are not allowed to access');
     }
     public function store(Request $request){
-        // Validate input data
         $validatedData = $request->validate([
             'stock_date' => 'required',
         ]);
-
-        $itemId = $request->service_id;
-        $branchId = $request->branch_id;
-
-        if (empty($itemId)) {
+        $itemid = $request->service_id;
+        $branch_id = $request->branch_id;
+        if(empty($itemid)){
             return redirect()->back()->with(['danger' => 'At least one item to select']);
         }
-
-        // Start a database transaction
-        DB::beginTransaction();
-
-        try {
-            // Create a new stock
-            $stock = Stock::create([
-                'stock_date' => $request->stock_date,
-                'vendor_id' => $request->vendor_id,
-                'total_amount' => $request->finaltotal_amount,
-                'qty' => array_sum($request->qty) // Calculate total quantity
-            ]);
-
-            $dataStockItems = [];
-            $dataStockReport = [];
-
-            // Prepare data for stock items and stock report
-            foreach ($itemId as $key => $itemIdValue) {
-                $dataStockItems[] = [
-                    'stock_id' => $stock->id,
-                    'item_id' => $itemIdValue,
-                    'stock_quantity' => $request->qty[$key],
-                    'stock_amount' => $request->rate[$key],
-                    'item_total_amount' => $request->totalamount[$key],
-                    'unit' => $request->unit[$key]
-                ];
-
-                $dataStockReport[] = [
-                    'item_id' => $itemIdValue,
-                    'quantity' => $request->qty[$key],
-                    'unit' => $request->unit[$key]
-                ];
-            }
-
-            // Bulk insert stock items
-            StockItem::insert($dataStockItems);
-
-            // // Update or insert stock report
-            // foreach ($dataStockReport as $stockReportValue) {
-            //     $itemId = $stockReportValue['item_id'];
-            //     $quantity = $stockReportValue['quantity'];
-            //     $unit = $stockReportValue['unit'];
-
-            //     StockReport::updateOrCreate(
-            //         ['item_id' => $itemId, 'branch_id' => $branchId],
-            //         ['quantity' => DB::raw("quantity + $quantity"), 'unit' => $unit]
-            //     );
-            // }
-
-            // Commit the transaction
-            DB::commit();
-
-            return redirect()->route('admin.stock.in.list')->with('success', 'Stock created successfully.');
-        } catch (\Exception $e) {
-            // Rollback the transaction if an exception occurs
-            DB::rollback();
-            return redirect()->back()->with('error', 'Failed to create stock. Please try again.');
+        $qty = $request->qty;
+        $amount = $request->rate;
+        $unit = $request->unit;
+        $company_id = $request->branch_id;
+        $totalamount = $request->totalamount;
+        $date = $request->stock_date;
+        $Lgadhi = $request->Lgadhi;
+        $newDateFormat = date("m/d/Y", strtotime($date));
+        $mainqty =  0;
+        foreach ($qty as $qtymainkey => $qtymainvalue) {
+            $mainqty += $qtymainvalue;
         }
+        $datastock = [
+            'stock_date' => $request->stock_date,
+            'vendor_id' => $request->vendor_id,
+            'company_id' => $request->branch_id,
+            'total_amount' => $request->finaltotal_amount,
+            'gadhiL' => $Lgadhi,
+            'qty' => $mainqty
+        ];
+        $id = Stock::insertGetId($datastock);
+        foreach ($itemid as $key => $itemidvalue) {
+            $datastockitem[] = [
+                'stock_id' => $id,
+                'item_id' => $itemidvalue,
+                'branch_id' => $request->branch_id,
+                'stock_quantity' => $qty[$key],
+                'stock_amount' => $amount[$key],
+                'itemtotalamount' => $totalamount[$key],
+                'unit' => $unit[$key],
+                'gadhiL' => $Lgadhi
+            ];;
+        }
+        foreach ($datastockitem as $stockitemvalue) {
+            StockItem::insertGetId($stockitemvalue);
+        }
+        return redirect()->route('admin.stock.in.list')->with('success','stock created successfully.');
+
     }
     public function edit($id){
         if(Auth::check()){
