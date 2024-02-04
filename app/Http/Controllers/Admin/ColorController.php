@@ -95,8 +95,10 @@ class ColorController extends Controller
             $user_data = auth()->user();
             $user = Color::where('id', $id)->first();
 
-            $color_list = Color::paginate(10);
-            return view('admin.color.color_edit',compact('user_data','user','color_list'));
+            $color_combination = ColorCombination::where('color_id', $id)->join('color', 'color_combination.color_id', '=', 'color.id')->get();
+
+            $color_list = Color::get();
+            return view('admin.color.color_edit',compact('user_data','user','color_list','color_combination'));
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
@@ -114,10 +116,20 @@ class ColorController extends Controller
             'color_code' => $request->color_code,
             'color_name' => $request->color_name,
        ];
-
+       $name = $request->name;
+        $gm = $request->gm;
         Color::where('id', $id)->update($datauser);
-
-
+        $deleted = ColorCombination::where('color_id', $id)->delete();
+        foreach ($name as $key => $itemidvalue) {
+            $datastockitem[] = [
+                'color_id' => $id,
+                'gram' => $gm[$key],
+                'name' => $itemidvalue,
+            ];;
+        }
+        foreach ($datastockitem as $stockitemvalue) {
+            ColorCombination::insertGetId($stockitemvalue);
+        }
 
         return redirect()->route('admin.color.list')->with('success','color Update successfully.');
     }

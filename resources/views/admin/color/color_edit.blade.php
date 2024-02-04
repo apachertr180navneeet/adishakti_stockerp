@@ -97,7 +97,19 @@
                                     </thead>
                                     <tbody id="quoteTableBody">
                                         <!-- Quotation rows will be added here -->
-
+                                        @foreach ($color_combination as $colorcombination)
+                                        <tr>
+                                            <td>
+                                                {{ $colorcombination->name }}
+                                                <input type="hidden" name="name[]" value="{{$colorcombination->name}}">
+                                            </td>
+                                            <td>
+                                                {{ $colorcombination->gram }}
+                                                <input type="hidden" name="gm[]" value="{{$colorcombination->gram}}">
+                                            </td>
+                                            <td><button type="button" class="btn btn-danger remove-row"><i class="fa fa-times" aria-hidden="true"></i></button></td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
