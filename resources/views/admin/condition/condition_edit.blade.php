@@ -1,5 +1,5 @@
 @extends('admin.layout.main_app')
-@section('title', 'Condition Master')
+@section('title', 'Chemical Master')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -8,13 +8,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Condition Master</h1>
+                        <h1 class="m-0">Chemical Master</h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Condition Master</li>
+                            <li class="breadcrumb-item active">Chemical Master</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -33,7 +33,7 @@
                         <!-- general form elements -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Condition Edit</h3>
+                                <h3 class="card-title">Chemical Edit</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->

@@ -55,8 +55,8 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="rate_per_gram">Rate per Gram</label>
-                                    <input type="text" class="form-control" id="rate_per_gram" name="rate_per_gram" value="{{ old('rate_per_gram') }}" placeholder="Enter Rate Per Gram" required/>
+                                    <label for="rate_per_gram">Rate per Meter</label>
+                                    <input type="text" class="form-control" id="rate_per_gram" name="rate_per_gram" value="{{ old('rate_per_gram') }}" placeholder="Enter Rate Per Meter" required/>
                                     @error('rate_per_gram')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -65,10 +65,10 @@
                                     <label>Color Combination</label>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Combination Color A</label>
-                                            <select name="combination_color_a" class="form-control">
+                                            <label>Combination Color</label>
+                                            <select name="combination_color" id="combination_color" class="form-control">
                                               <option value="">Select Color</option>
                                               @foreach ($color_list as $color)
                                               <option value="{{ $color->color_name }}">{{ $color->color_name }}</option>
@@ -76,66 +76,29 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <label>Combination Gm A</label>
-                                        <input type="text" name="combination_gm_a" class="form-control" placeholder="" />
+                                    <div class="col-md-6">
+                                        <label>Combination Gm</label>
+                                        <input type="text" name="combination_gm" id="combination_gm" class="form-control" placeholder="" />
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Combination Color B</label>
-                                            <select name="combination_color_b" class="form-control">
-                                              <option value="">Select Color</option>
-                                              @foreach ($color_list as $color)
-                                              <option value="{{ $color->color_name }}">{{ $color->color_name }}</option>
-                                              @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label>Combination Gm B</label>
-                                        <input type="text" name="combination_gm_b" class="form-control" placeholder="" />
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-sm btn-success mt-2" id="addQuote"> +
+                                            Add</button>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Color Chemical</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Chemical Color A</label>
-                                            <select name="chemical_color_a" class="form-control">
-                                              <option value="">Select Color</option>
-                                              @foreach ($color_list as $color)
-                                              <option value="{{ $color->color_name }}">{{ $color->color_name }}</option>
-                                              @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label>Chemical Gm A</label>
-                                        <input type="text" name="chemical_gm_a" class="form-control" placeholder="" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Chemical Color B</label>
-                                            <select name="chemical_color_b" class="form-control">
-                                              <option value="">Select Color</option>
-                                              @foreach ($color_list as $color)
-                                              <option value="{{ $color->color_name }}">{{ $color->color_name }}</option>
-                                              @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label>Chemical Gm B</label>
-                                        <input type="text" name="chemical_gm_b" class="form-control" placeholder="" />
-                                    </div>
-                                </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td width="12%">Color</td>
+                                            <td width="8%">GM</td>
+                                            <td width="8%">Remove</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="quoteTableBody">
+                                        <!-- Quotation rows will be added here -->
+
+                                    </tbody>
+                                </table>
                                 <div class="card-footer">
                                   <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
@@ -150,5 +113,28 @@
         </div>
     </section>
 </div>
+<script>
+    $(document).ready(function() {
+            $('#addQuote').click(function() {
+                var combination_colorname = $('#combination_color').val();
+                var combination_colorname = $('#combination_color :selected').text();
+                var combination_gm = $('#combination_gm').val();
 
+                $('#quoteTableBody').append(`<tr>
+                                            <td>` + combination_colorname +
+                    `<input type="hidden" name="name[]" value="` + combination_colorname + `" required /></td>
+                                            <td>` + combination_gm + `<input type="hidden" name="gm[]" value="` +
+                                                combination_gm + `" required/></td>
+                                            <td><button type="button" class="btn btn-danger remove-row"><i class="fa fa-times" aria-hidden="true"></i></button></td>
+                                        </tr>`);
+                $('#combination_color').val('');
+                $('#combination_gm').val('');
+            });
+        });
+
+
+        $(document).on('click', '.remove-row', function() {
+            (this).closest('tr').remove();
+        });
+</script>
 @endsection

@@ -50,7 +50,7 @@
                             </div>
                             <form action="{{ route('admin.stock.material.serach') }}" method="get">
                                 <div class="row ml-3">
-                                    <div class="col-md-1">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Start Date:</label>
                                             <div class="input-group">
@@ -60,7 +60,7 @@
                                             <!-- /.input group -->
                                         </div>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>End Date:</label>
                                             <div class="input-group">

@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 
 use App\Models\{
     User,
-    Color
+    Color,
+    ColorCombination
 };
 
 
@@ -62,21 +63,27 @@ class ColorController extends Controller
             'rate_per_gram' => 'required',
         ]);
 
+        $name = $request->name;
+        $gm = $request->gm;
+
         $datauser = [
              'color_code' => $request->color_code,
              'color_name' => $request->color_name,
              'rate_per_gram' => $request->rate_per_gram,
-             'combination_color_a' => $request->combination_color_a,
-             'combination_gm_a' => $request->combination_gm_a,
-             'combination_color_b' => $request->combination_color_b,
-             'combination_gm_b' => $request->combination_gm_b,
-             'chemical_color_a' => $request->chemical_color_a,
-             'chemical_gm_a' => $request->chemical_gm_a,
-             'chemical_color_b' => $request->chemical_color_b,
-             'chemical_gm_b' => $request->chemical_gm_b,
         ];
 
         $id = Color::insertGetId($datauser);
+
+        foreach ($name as $key => $itemidvalue) {
+            $datastockitem[] = [
+                'color_id' => $id,
+                'gram' => $gm[$key],
+                'name' => $itemidvalue,
+            ];;
+        }
+        foreach ($datastockitem as $stockitemvalue) {
+            ColorCombination::insertGetId($stockitemvalue);
+        }
 
 
         return redirect()->route('admin.color.list')->with('success','color created successfully.');
@@ -88,8 +95,8 @@ class ColorController extends Controller
             $user_data = auth()->user();
             $user = Color::where('id', $id)->first();
 
-
-            return view('admin.color.color_edit',compact('user_data','user'));
+            $color_list = Color::paginate(10);
+            return view('admin.color.color_edit',compact('user_data','user','color_list'));
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');

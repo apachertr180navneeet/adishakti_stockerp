@@ -122,13 +122,13 @@ Route::name('admin.')->prefix('admin')->controller(BatchController::class)->midd
 });
 
 Route::name('admin.')->prefix('admin')->controller(ConditionMasterController::class)->middleware('web')->group(function () {
-    Route::get('condition_list', 'index')->name('condition.list');
-    Route::get('condition_add', 'create')->name('condition.add');
-    Route::post('condition_store', 'store')->name('condition.store');
-    Route::get('condition_edit/{id}', 'edit')->name('condition.edit');
-    Route::post('condition_update', 'update')->name('condition.update');
-    Route::delete('condition_delete/{id}', 'delete')->name('condition.delete');
-    Route::get('condition_status/{id}', 'status')->name('condition.status');
+    Route::get('chemical_list', 'index')->name('condition.list');
+    Route::get('chemical_add', 'create')->name('condition.add');
+    Route::post('chemical_store', 'store')->name('condition.store');
+    Route::get('chemical_edit/{id}', 'edit')->name('condition.edit');
+    Route::post('chemical_update', 'update')->name('condition.update');
+    Route::delete('chemical_delete/{id}', 'delete')->name('condition.delete');
+    Route::get('chemical_status/{id}', 'status')->name('condition.status');
 });
 Route::name('admin.')->prefix('admin')->controller(UserController::class)->middleware('web')->group(function () {
     Route::get('user_list', 'index')->name('user.list');

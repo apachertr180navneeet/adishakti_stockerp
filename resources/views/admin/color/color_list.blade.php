@@ -75,7 +75,7 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        {{--  <a href="{{ route('admin.color.edit',$color->id) }}" class="btn btn-warning">Edit</a>  --}}
+                                                        <a href="{{ route('admin.color.edit',$color->id) }}" class="btn btn-warning">Edit</a>
                                                         <a href="javascript:void(0)" id="delete-user" data-id="{{ $color->id }}" data-url="{{ route('admin.color.delete',$color->id) }}"  class="btn btn-danger delete">Delete</a>
                                                         @if($color->status =='0')
                                                             <a href="javascript:void(0)" data-id="{{ $color->id }}" data-status="1" data-url="{{ route('admin.color.status',$color->id) }}" class="btn btn-success status">Active</a>
