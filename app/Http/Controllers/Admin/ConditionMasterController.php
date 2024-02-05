@@ -47,7 +47,10 @@ class ConditionMasterController extends Controller
         if(Auth::check()){
             $user_data = auth()->user();
 
-            return view('admin.condition.condition_add',compact('user_data'));
+            $unit_list = Unit::get();
+            $condition_list = ConditionMaster::get();
+
+            return view('admin.condition.condition_add',compact('user_data','unit_list','condition_list'));
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
@@ -59,11 +62,13 @@ class ConditionMasterController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'value' => 'required',
+            'unit_id' => 'required',
         ]);
 
         $datauser = [
              'name' => $request->name,
              'value' => $request->value,
+             'unit' => $request->unit_id,
         ];
 
         $id = ConditionMaster::insertGetId($datauser);
