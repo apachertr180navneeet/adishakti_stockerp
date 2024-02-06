@@ -74,8 +74,8 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.condition.edit', $condition->id) }}"
-                                                        class="btn btn-warning">Edit</a>
+                                                    {{--  <a href="{{ route('admin.condition.edit', $condition->id) }}"
+                                                        class="btn btn-warning">Edit</a>  --}}
                                                     <a href="javascript:void(0)" id="delete-user"
                                                         data-id="{{ $condition->id }}"
                                                         data-url="{{ route('admin.condition.delete', $condition->id) }}"

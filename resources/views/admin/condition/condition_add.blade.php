@@ -74,13 +74,13 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type" id="type" value="option1">
+                                                <input class="form-check-input" type="radio" name="type" id="type" value="base_unit" checked>
                                                 <label class="form-check-label" for="type">Base Unit</label>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type" id="type" value="option1">
+                                                <input class="form-check-input" type="radio" name="type" id="type" value="sub_unit">
                                                 <label class="form-check-label" for="type">Sub Unit</label>
                                             </div>
                                         </div>
@@ -121,8 +121,10 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <td width="12%">Color</td>
-                                            <td width="8%">GM</td>
+                                            <td width="12%">Chemical</td>
+                                            <td width="8%">QTY</td>
+                                            <td width="8%">QTY/meter value</td>
+                                            <td width="8%">Calculation</td>
                                             <td width="8%">Remove</td>
                                         </tr>
                                     </thead>
@@ -145,5 +147,34 @@
             </div>
         </section>
     </div>
+    <script>
+        $(document).ready(function() {
+                $('#addQuote').click(function() {
+                    var meterValue = $("#metervalue").val();
+                    var chamical_id = $('#chamical').val();
+                    var chamical_name = $('#chamical :selected').text();
+                    var qty = $('#qty').val();
+                    var meter_value = qty +'/'+meterValue;
+                    var calculation = qty / meterValue;
 
+                    $('#quoteTableBody').append(`<tr>
+                                            <td>` + chamical_name +
+                                            `<input type="hidden" name="chemical_id[]" value="` + chamical_id + `" required /></td>
+                                            <td>` + qty + `<input type="hidden" name="chemical_qty[]" value="` +
+                                                qty + `" required/></td>
+                                            <td>` + meter_value + `</td>
+                                            <td>` + calculation + `<input type="hidden" name="chemical_calculation[]" value="` +
+                                                calculation + `" required/></td>
+                                            <td><button type="button" class="btn btn-danger remove-row"><i class="fa fa-times" aria-hidden="true"></i></button></td>
+                                        </tr>`);
+                    $('#combination_color').val('');
+                    $('#combination_gm').val('');
+                });
+            });
+
+
+            $(document).on('click', '.remove-row', function() {
+                (this).closest('tr').remove();
+            });
+    </script>
 @endsection

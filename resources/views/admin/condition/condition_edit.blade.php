@@ -42,21 +42,35 @@
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $user->id }}">
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            value="{{ $user->name }}" placeholder="Enter Name" required />
-                                        @error('name')
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label for="name">Chemical Name</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                value="{{ $user->name }}" placeholder="Enter Chemical Name" required />
+                                            @error('name')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Unit</label>
+                                            <select class="form-control select2bs4 select2-hidden-accessible" name="unit_id" style="width: 100%;" aria-hidden="true" required>
+                                                <option value="">----Select----</option>
+                                                @foreach ($unit_list as $unit)
+                                                <option value="{{ $unit->id }}">{{ $unit->unit_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @error('unit_id')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="value">Value</label>
-                                        <input type="text" class="form-control" id="value" name="value"
-                                            value="{{ $user->value }}" placeholder="Enter Value" required />
-                                        @error('value')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <div class="form-group col-md-4">
+                                            <label for="value">Rate Per Meter</label>
+                                            <input type="text" class="form-control" id="value" name="value"
+                                                value="{{ old('value') }}" placeholder="Enter Rate Per Meter" required />
+                                            @error('value')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Save</button>

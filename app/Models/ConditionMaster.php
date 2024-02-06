@@ -17,6 +17,8 @@ class ConditionMaster extends Model
         'type',
         'value',
         'status',
-        'unit'
+        'unit',
+        'type',
+        'meter_value'
     ];
 }

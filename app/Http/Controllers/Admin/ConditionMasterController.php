@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\{
     User,
     Unit,
-    ConditionMaster
+    ConditionMaster,
+    ChemicalCombination
 };
 
 
@@ -48,7 +49,8 @@ class ConditionMasterController extends Controller
             $user_data = auth()->user();
 
             $unit_list = Unit::get();
-            $condition_list = ConditionMaster::get();
+
+            $condition_list = ConditionMaster::where('type', 'base_unit')->get();
 
             return view('admin.condition.condition_add',compact('user_data','unit_list','condition_list'));
         }
@@ -69,9 +71,29 @@ class ConditionMasterController extends Controller
              'name' => $request->name,
              'value' => $request->value,
              'unit' => $request->unit_id,
+             'type' => $request->type,
+             'meter_value' => $request->metervalue,
         ];
 
         $id = ConditionMaster::insertGetId($datauser);
+
+        if($request->type == "sub_unit"){
+            $chemical_id = $request->chemical_id;
+            $chemical_qty = $request->chemical_qty;
+            $chemical_calculation = $request->chemical_calculation;
+
+            foreach ($chemical_id as $key => $itemidvalue) {
+                $datastockitem[] = [
+                    'chemical_id' => $id,
+                    'chemical_item_id' => $itemidvalue,
+                    'chemcical_qty' => $chemical_qty[$key],
+                    'chemical_calculation' => $chemical_calculation[$key],
+                ];;
+            }
+            foreach ($datastockitem as $stockitemvalue) {
+                ChemicalCombination::insertGetId($stockitemvalue);
+            }
+        }
 
 
         return redirect()->route('admin.condition.list')->with('success','condition created successfully.');
