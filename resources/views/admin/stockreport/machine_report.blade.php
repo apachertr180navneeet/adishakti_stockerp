@@ -61,6 +61,16 @@
                                             <input class="form-control" type="date" name="from" id="from" value="{{ $startDate }}">
                                         </div>
                                     </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-group">
+                                            <label for="branch"> Branch</label>
+                                            <select class="form-control" id="branch" name="branch">
+                                                @foreach ($branch_list as $branchs)
+                                                <option value="{{ $branchs->id }}" @if($branchs->id == $branch) selected @endif>{{ $branchs->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-3 mb-2">
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </div>
@@ -88,7 +98,7 @@
                     </div>
                     <!-- /.card -->
                 </div>
-                <!-- /.col -->              
+                <!-- /.col -->
                 <div class="col-12" id="exportableContent">
                     <div class="row mb-2">
                     @if (!empty($stock_report))
@@ -121,7 +131,7 @@
                                                                         ->where('stock_meterial_consumption.stock_material_id',$stock_reports->id)
                                                                         ->first();
                                                     @endphp
-                                                    @foreach ( $stock_report_color as $stock_report_colors ) 
+                                                    @foreach ( $stock_report_color as $stock_report_colors )
                                                     @php
                                                     $colorroundedgram = $stock_report_colors->usage_per_gram;
                                                     @endphp
@@ -134,7 +144,7 @@
                                                     @php
                                                     $colorroundedgramstest = 0;
                                                     @endphp
-                                                    @foreach ( $ColorCombination as $ColorCombinations ) 
+                                                    @foreach ( $ColorCombination as $ColorCombinations )
                                                     @php
                                                     $colorroundedgramstest += $ColorCombinations->gram * $stock_meterial_consumption->qty * 10;
                                                     @endphp
@@ -146,8 +156,8 @@
                                                         </tr>
                                                         <table class="table">
                                                             <tbody>
-                                                                
-                                                                @foreach ( $ColorCombination as $ColorCombinations ) 
+
+                                                                @foreach ( $ColorCombination as $ColorCombinations )
                                                                 @php
                                                                 $colorroundedgrams = $ColorCombinations->gram * $stock_meterial_consumption->qty * 10;
                                                                 @endphp
@@ -180,7 +190,7 @@
                                                                         ->join('condition_master', 'stock_meterial_chemical.chemical_item_id', '=', 'condition_master.id')
                                                                         ->get();
                                                     @endphp
-                                                    @foreach ( $stock_report_chemical as $stock_report_chemicals ) 
+                                                    @foreach ( $stock_report_chemical as $stock_report_chemicals )
                                                     @php
                                                     $chemicalroundedgram = number_format((float)$stock_report_chemicals->gram, 2, '.', '');
                                                     @endphp
@@ -200,7 +210,7 @@
                                                                                     ->join('unit', 'condition_master.unit', '=', 'unit.id')
                                                                                     ->get();
                                                                 @endphp
-                                                                @foreach ( $ChemicalCombination as $ChemicalCombinations ) 
+                                                                @foreach ( $ChemicalCombination as $ChemicalCombinations )
                                                                 @php
                                                                 $colorroundedgram = number_format((float)$ChemicalCombinations->chemical_calculation, 2, '.', '');
                                                                 @endphp
@@ -219,7 +229,7 @@
                                 </div>
                             </div>
                         @endforeach
-                    @else    
+                    @else
                         <div class="col-md-3">
                                 <div class="card" style="width: 100%;">
                                     <div class="card-body">

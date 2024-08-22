@@ -180,11 +180,13 @@ class StockReportController extends Controller
             $formattedDate = $currentDate->format('Y-m-d');
             $startDate = $formattedDate;
             $endDate = $formattedDate;
+            $branch_list = Company::where('status', '1')->get();
+            $branch = "";
 
-            $stock_report = DB::table('stock_material_managemnt')->select('stock_material_managemnt.id','stock_material_managemnt.excute_date','stock_material_managemnt.marka','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.excute_date','stock_material_managemnt.machine_name')->where('stock_material_managemnt.excute_date',$formattedDate)
+            $stock_report = DB::table('stock_material_managemnt')->select('stock_material_managemnt.id','stock_material_managemnt.excute_date','stock_material_managemnt.marka','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.excute_date','stock_material_managemnt.machine_name')->where('stock_material_managemnt.excute_date',$formattedDate)->where('stock_material_managemnt.source_location',$branch)
             ->get();
 
-            return view('admin.stockreport.machine_report',compact('user_data','stock_report','startDate'));
+            return view('admin.stockreport.machine_report',compact('user_data','stock_report','startDate','branch_list','branch'));
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
@@ -196,12 +198,14 @@ class StockReportController extends Controller
             $user_data = auth()->user();
             $startDate = $request->from;
             //$startDate = $currentDate->format('Y-m-d');
-            
+            $branch_list = Company::where('status', '1')->get();
+            $branch = $request->branch;
 
-            $stock_report = DB::table('stock_material_managemnt')->select('stock_material_managemnt.id','stock_material_managemnt.excute_date','stock_material_managemnt.marka','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.excute_date','stock_material_managemnt.machine_name')->where('stock_material_managemnt.excute_date',$startDate)
+
+            $stock_report = DB::table('stock_material_managemnt')->select('stock_material_managemnt.id','stock_material_managemnt.excute_date','stock_material_managemnt.marka','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.excute_date','stock_material_managemnt.machine_name')->where('stock_material_managemnt.excute_date',$startDate)->where('stock_material_managemnt.source_location',$branch)
             ->get();
 
-            return view('admin.stockreport.machine_report',compact('user_data','stock_report','startDate'));
+            return view('admin.stockreport.machine_report',compact('user_data','stock_report','startDate','branch_list','branch'));
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
