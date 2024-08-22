@@ -111,7 +111,8 @@ class ConditionMasterController extends Controller
             $unit_list = Unit::get();
             $condition_list = ConditionMaster::where('type', 'base_unit')->orderBy('name')->get();
 
-            $userGet = ChemicalCombination::where('chemical_id', $id)->get();
+            $userGet = ChemicalCombination::where('chemical_id', $id)->join('condition_master', 'chemical_combination.chemical_id', '=', 'condition_master.id')->get();
+            //dd($user);
 
 
             return view('admin.condition.condition_edit',compact('user_data','user','unit_list','condition_list','userGet'));
@@ -166,13 +167,13 @@ class ConditionMasterController extends Controller
             $user_data = auth()->user();
 
             $colorstock = DB::table('color_stock_in')->select('color_stock_in.*','users.name as vendor_name')->where('color_stock_in.type','1')->join('users', 'color_stock_in.vendor_id', '=', 'users.id')->get();
-            
+
             return view('admin.chemicalstock.chemicalstockin_list',compact('user_data','colorstock'))->with('i', (request()->input('page', 1) - 1) * 1);
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
     }
-    
+
     public function addchemicalstock(){
         if(Auth::check()){
             $user_data = auth()->user();
@@ -198,7 +199,7 @@ class ConditionMasterController extends Controller
         $totalamount = $request->totalamount;
         $finaltotal_amount = $request->final_total_amount;
 
-        $datacolorin = 
+        $datacolorin =
         [
             'date' => $stock_date,
             'invoice_number' => $invoice,
@@ -220,7 +221,7 @@ class ConditionMasterController extends Controller
                 'color_id' => $itemidvalue,
                 'qty' => $qty[$key],
                 'branch_id' => $company,
-                
+
             ];
         }
         foreach ($datastockitem as $stockitemvalue) {
@@ -253,7 +254,7 @@ class ConditionMasterController extends Controller
             $user_data = auth()->user();
             $colorstockIN = ColorStockIn::where('id', $id)->first();
             $stockItem = ColorItem::where('color_stock_id', $id)->join('condition_master', 'color_item.color_id', '=', 'condition_master.id')->get();
-            
+
             $finalamount = '0';
             foreach ($stockItem as $key => $value) {
                 $finalamount += $value->total_amount;
