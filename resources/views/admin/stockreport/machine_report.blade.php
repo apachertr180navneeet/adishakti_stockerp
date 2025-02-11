@@ -86,11 +86,11 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="row mb-2">
+                            {{--  <div class="row mb-2">
                                 <div class="col-md-1 mb-2">
                                     <button type="submit" id="exportBtn" class="btn btn-block btn-success">PDF</button>
                                 </div>
-                            </div>
+                            </div>  --}}
 
                             <br>
 

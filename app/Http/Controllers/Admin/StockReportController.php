@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\{
     Storage
 };
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 use Carbon\Carbon;
 
@@ -204,6 +206,9 @@ class StockReportController extends Controller
 
             $stock_report = DB::table('stock_material_managemnt')->select('stock_material_managemnt.id','stock_material_managemnt.excute_date','stock_material_managemnt.marka','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.excute_date','stock_material_managemnt.machine_name')->where('stock_material_managemnt.excute_date',$startDate)->where('stock_material_managemnt.source_location',$branch)
             ->get();
+
+            $pdf = PDF::loadView('pdf.stock_report', compact('stock_report'));
+            return $pdf->download('Stock_Report.pdf');
 
             return view('admin.stockreport.machine_report',compact('user_data','stock_report','startDate','branch_list','branch'));
         }
