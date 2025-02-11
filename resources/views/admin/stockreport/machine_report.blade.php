@@ -5,6 +5,22 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 @section('content')
+
+<style>
+    td{
+        font-weight: bold;
+    }
+
+    hr {
+        margin: 1rem 0;
+        color: inherit;
+        background-color: black;
+        border: 0;
+      }
+    #exportableContent {
+        background-color: white !important;
+    }    
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -103,20 +119,20 @@
                     <div class="row mb-2">
                     @if (!empty($stock_report))
                         @foreach ($stock_report as $stock_reports)
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="card" style="width: 100%;">
                                     <div class="card-body">
-                                        <p>Jigar Machine :- {{$stock_reports->machine_name}}</p>
-                                        <p>Person Name :- </p>
-                                        <p>Date :- {{$stock_reports->excute_date}}</p>
-                                        <p>Marka :- {{$stock_reports->marka}}</p>
+                                        <p style="font-weight: bold; font-size: 20px">Jigar Machine :- {{$stock_reports->machine_name}}</p>
+                                        <p style="font-weight: bold; font-size: 20px">Person Name :- </p>
+                                        <p style="font-weight: bold; font-size: 20px">Date :- {{$stock_reports->excute_date}}</p>
+                                        <p style="font-weight: bold; font-size: 20px">Marka :- {{$stock_reports->marka}}</p>
                                         <div class ="color">
-                                            <p class="card-title">Color :- </p>
+                                            <p class="card-title" style="font-weight: bold; font-size: 20px">Color :- </p>
                                             <table class="table">
                                                 <thead>
                                                     <tr>
                                                         <th scope="row">Name</th>
-                                                        <th scope="row">Meter Value</th>
+                                                        <th scope="row">Meter</th>
                                                         <th scope="row">Gram</th>
                                                     </tr>
                                                 </thead>
@@ -150,11 +166,12 @@
                                                     @endphp
                                                     @endforeach
                                                         <tr>
-                                                        <th scope="row">{{$stock_report_colors->color_name}}</th>
-                                                        <td>{{$stock_meterial_consumption->qty}} Meter</td>
-                                                        <td>{{$colorroundedgramstest}} GM</td>
+                                                        <th scope="row" style="font-size: 20px">{{$stock_report_colors->color_name}}</th>
+                                                        <td class="fw-bold" style="font-size: 20px">{{$stock_meterial_consumption->qty}} Meter</td>
+                                                        <td class="fw-bold" style="font-size: 20px">{{$colorroundedgramstest}} GM</td>
                                                         </tr>
                                                         <table class="table">
+                                                            <hr class="border-2 border-top" style="height: 3px; color:black" />
                                                             <tbody>
 
                                                                 @foreach ( $ColorCombination as $ColorCombinations )
@@ -162,8 +179,8 @@
                                                                 $colorroundedgrams = $ColorCombinations->gram * $stock_meterial_consumption->qty * 10;
                                                                 @endphp
                                                                     <tr>
-                                                                    <th scope="row">{{$ColorCombinations->name}}</th>
-                                                                    <td>{{$colorroundedgrams }} GM</td>
+                                                                    <th scope="row" style="font-size: 20px">{{$ColorCombinations->name}}</th>
+                                                                    <td class="fw-bold" style="font-size: 20px">{{$colorroundedgrams }} GM</td>
                                                                     </tr>
                                                                 @endforeach
                                                             </tbody>
@@ -178,7 +195,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="row">Name</th>
-                                                        <th scope="row">Meter Value</th>
+                                                        <th scope="row">Meter</th>
                                                         <th scope="row">Gram</th>
                                                     </tr>
                                                 </thead>
@@ -195,12 +212,12 @@
                                                     $chemicalroundedgram = number_format((float)$stock_report_chemicals->gram, 2, '.', '');
                                                     @endphp
                                                         <tr>
-                                                        <th scope="row">{{$stock_report_chemicals->name}}</th>
-                                                        <td>{{$stock_meterial_consumption->qty}} Meter</td>
-                                                        <td>{{$chemicalroundedgram * $stock_meterial_consumption->qty}} GM</td>
+                                                        <th scope="row" style="font-size: 20px">{{$stock_report_chemicals->name}}</th>
+                                                        <td class="fw-bold" style="font-size: 20px">{{$stock_meterial_consumption->qty}} Meter</td>
+                                                        <td class="fw-bold" style="font-size: 20px">{{$chemicalroundedgram * $stock_meterial_consumption->qty}} GM</td>
                                                         </tr>
-
                                                         <table class="table">
+                                                            <hr class="border-2 border-top" style="height: 3px; size: 14px; color:black" />
                                                             <tbody>
                                                                 @php
                                                                     $ChemicalCombination = DB::table('chemical_combination')
@@ -215,8 +232,8 @@
                                                                 $colorroundedgram = number_format((float)$ChemicalCombinations->chemical_calculation, 2, '.', '');
                                                                 @endphp
                                                                     <tr>
-                                                                    <th scope="row">{{$ChemicalCombinations->name}}</th>
-                                                                    <td>{{$colorroundedgram * $stock_meterial_consumption->qty}} {{$ChemicalCombinations->unit_code}}</td>
+                                                                    <th scope="row" style="font-size: 20px">{{$ChemicalCombinations->name}}</th>
+                                                                    <td class="fw-bold" style="font-size: 20px">{{$colorroundedgram * $stock_meterial_consumption->qty}} {{$ChemicalCombinations->unit_code}}</td>
                                                                     </tr>
                                                                 @endforeach
                                                             </tbody>
@@ -247,24 +264,158 @@
     </section>
     <!-- /.content -->
 </div>
+<!-- jsPDF Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- jsPDF AutoTable Plugin -->
+{{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>  --}}
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 
 
 <script type="text/javascript">
-    $("body").on("click", "#exportBtn", function () {
-        html2canvas($('#exportableContent')[0], {
-            onrendered: function (canvas) {
-                var data = canvas.toDataURL();
+    {{--  $("#exportBtn").click(function () {
+        setTimeout(function () {
+            html2canvas(document.getElementById("exportableContent"), {
+                allowTaint: true,
+                useCORS: true,
+                scale: 2, // High resolution for better clarity
+            }).then(function (canvas) {
+                var imgWidth = 500; // Width in PDF
+                var pageHeight = 842; // A4 page height in points
+                var imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+                var yOffset = 0;
+                var sections = [];
+                var tempCanvas = document.createElement("canvas");
+                var ctx = tempCanvas.getContext("2d");
+    
+                tempCanvas.width = canvas.width;
+                tempCanvas.height = pageHeight * (canvas.width / imgWidth);
+    
+                let totalPages = Math.ceil(canvas.height / tempCanvas.height); // Total number of pages
+                let pageIndex = 0; // Track current page
+    
+                // Identify row positions to ensure no row is cut off
+                let table = document.getElementById("exportableContent");
+                let rows = table.getElementsByTagName("tr");
+                let rowPositions = [];
+    
+                // Collect row positions based on offsetTop
+                for (let row of rows) {
+                    rowPositions.push({
+                        start: row.offsetTop,
+                        end: row.offsetTop + row.offsetHeight
+                    });
+                }
+    
+                while (yOffset < canvas.height) {
+                    let nextOffset = yOffset + tempCanvas.height;
+                    let adjustedOffset = yOffset; // To ensure page ends at a full row
+    
+                    // Find the closest full row boundary
+                    for (let i = 0; i < rowPositions.length; i++) {
+                        if (rowPositions[i].start >= nextOffset) {
+                            adjustedOffset = rowPositions[i - 1]?.end || nextOffset;
+                            break;
+                        }
+                    }
+    
+                    // Adjust tempCanvas height to end at a full row
+                    tempCanvas.height = adjustedOffset - yOffset;
+    
+                    let sectionPercentage = ((tempCanvas.height / canvas.height) * 100).toFixed(2); // Convert to percentage
+    
+                    ctx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                    ctx.drawImage(
+                        canvas,
+                        0, yOffset, 
+                        canvas.width, tempCanvas.height, 
+                        0, 0, 
+                        tempCanvas.width, tempCanvas.height
+                    );
+    
+                    sections.push({
+                        image: tempCanvas.toDataURL("image/png"),
+                        width: imgWidth,
+                        margin: [0, 0, 0, 0],
+                        pageBreak: pageIndex < totalPages - 1 ? "after" : "" // Page break only if not last page
+                    });
+    
+                    console.log(`Page ${pageIndex + 1}: ${sectionPercentage}% of total content`);
+    
+                    yOffset = adjustedOffset; // Move to the next full row
+                    pageIndex++; // Update page index
+                }
+    
                 var docDefinition = {
-                    content: [{
-                        image: data,
-                        width: 500
-                    }]
+                    pageSize: "A4",
+                    content: sections,
                 };
-                pdfMake.createPdf(docDefinition).download("stock_report.pdf");
-            }
+    
+                pdfMake.createPdf(docDefinition).download("Machine_Report.pdf");
+            });
+        }, 500);
+    });      --}}
+    
+    $(document).ready(function () {
+        $("#exportBtn").click(function () {
+            const { jsPDF } = window.jspdf;
+            let doc = new jsPDF("p", "mm", "a4");
+    
+            let content = document.getElementById("exportableContent");
+    
+            html2canvas(content, {
+                backgroundColor: null,
+                scale: 2,
+                useCORS: true
+            }).then((canvas) => {
+                let imgData = canvas.toDataURL("image/png");
+                let imgWidth = 190;
+                let pageHeight = 297; // A4 height in mm
+                let imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let position = 10;
+                let heightLeft = imgHeight;
+    
+                doc.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight - position;
+    
+                let currentPage = 1;
+                while (heightLeft > 0) {
+                    doc.addPage();
+                    position = 10;
+                    let offset = (currentPage * (pageHeight - position) * canvas.height) / imgHeight;
+                    
+                    let croppedCanvas = cropCanvas(canvas, offset, canvas.width, (pageHeight * canvas.height) / imgHeight);
+                    let croppedImgData = croppedCanvas.toDataURL("image/png");
+                    let croppedImgHeight = (croppedCanvas.height * imgWidth) / croppedCanvas.width;
+    
+                    doc.addImage(croppedImgData, "PNG", 10, position, imgWidth, croppedImgHeight);
+                    heightLeft -= pageHeight;
+    
+                    currentPage++;
+                }
+    
+                doc.save("machine_report.pdf");
+            });
         });
+    
+        // Function to crop the canvas correctly
+        function cropCanvas(canvas, startY, width, height) {
+            let croppedCanvas = document.createElement("canvas");
+            croppedCanvas.width = width;
+            croppedCanvas.height = height;
+            let ctx = croppedCanvas.getContext("2d");
+    
+            ctx.drawImage(canvas, 0, startY, width, height, 0, 0, width, height);
+            return croppedCanvas;
+        }
     });
-
+    
+      
 
     $(document).ready(function(){
         $('input[type="radio"]').change(function(){
