@@ -1,9 +1,6 @@
 @extends('admin.layout.main_app')
 @section('title', 'Machine Report')
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 @section('content')
 
 <style>
@@ -16,10 +13,7 @@
         color: inherit;
         background-color: black;
         border: 0;
-      }
-    #exportableContent {
-        background-color: white !important;
-    }    
+      }   
 </style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -264,103 +258,11 @@
     </section>
     <!-- /.content -->
 </div>
-<!-- jsPDF Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<!-- jsPDF AutoTable Plugin -->
-{{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>  --}}
-
-<!-- jQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 
 
-<script type="text/javascript">
-    {{--  $("#exportBtn").click(function () {
-        setTimeout(function () {
-            html2canvas(document.getElementById("exportableContent"), {
-                allowTaint: true,
-                useCORS: true,
-                scale: 2, // High resolution for better clarity
-            }).then(function (canvas) {
-                var imgWidth = 500; // Width in PDF
-                var pageHeight = 842; // A4 page height in points
-                var imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
-                var yOffset = 0;
-                var sections = [];
-                var tempCanvas = document.createElement("canvas");
-                var ctx = tempCanvas.getContext("2d");
-    
-                tempCanvas.width = canvas.width;
-                tempCanvas.height = pageHeight * (canvas.width / imgWidth);
-    
-                let totalPages = Math.ceil(canvas.height / tempCanvas.height); // Total number of pages
-                let pageIndex = 0; // Track current page
-    
-                // Identify row positions to ensure no row is cut off
-                let table = document.getElementById("exportableContent");
-                let rows = table.getElementsByTagName("tr");
-                let rowPositions = [];
-    
-                // Collect row positions based on offsetTop
-                for (let row of rows) {
-                    rowPositions.push({
-                        start: row.offsetTop,
-                        end: row.offsetTop + row.offsetHeight
-                    });
-                }
-    
-                while (yOffset < canvas.height) {
-                    let nextOffset = yOffset + tempCanvas.height;
-                    let adjustedOffset = yOffset; // To ensure page ends at a full row
-    
-                    // Find the closest full row boundary
-                    for (let i = 0; i < rowPositions.length; i++) {
-                        if (rowPositions[i].start >= nextOffset) {
-                            adjustedOffset = rowPositions[i - 1]?.end || nextOffset;
-                            break;
-                        }
-                    }
-    
-                    // Adjust tempCanvas height to end at a full row
-                    tempCanvas.height = adjustedOffset - yOffset;
-    
-                    let sectionPercentage = ((tempCanvas.height / canvas.height) * 100).toFixed(2); // Convert to percentage
-    
-                    ctx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
-                    ctx.drawImage(
-                        canvas,
-                        0, yOffset, 
-                        canvas.width, tempCanvas.height, 
-                        0, 0, 
-                        tempCanvas.width, tempCanvas.height
-                    );
-    
-                    sections.push({
-                        image: tempCanvas.toDataURL("image/png"),
-                        width: imgWidth,
-                        margin: [0, 0, 0, 0],
-                        pageBreak: pageIndex < totalPages - 1 ? "after" : "" // Page break only if not last page
-                    });
-    
-                    console.log(`Page ${pageIndex + 1}: ${sectionPercentage}% of total content`);
-    
-                    yOffset = adjustedOffset; // Move to the next full row
-                    pageIndex++; // Update page index
-                }
-    
-                var docDefinition = {
-                    pageSize: "A4",
-                    content: sections,
-                };
-    
-                pdfMake.createPdf(docDefinition).download("Machine_Report.pdf");
-            });
-        }, 500);
-    });      --}}
-    
+
+<script type="text/javascript"
     $(document).ready(function () {
         $("#exportBtn").click(function () {
             const { jsPDF } = window.jspdf;
