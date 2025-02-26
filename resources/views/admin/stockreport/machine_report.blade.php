@@ -1,6 +1,9 @@
 @extends('admin.layout.main_app')
 @section('title', 'Machine Report')
 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 @section('content')
 
 <style>
@@ -13,7 +16,10 @@
         color: inherit;
         background-color: black;
         border: 0;
-      }   
+      }
+    #exportableContent {
+        background-color: white !important;
+    }    
 </style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -86,11 +92,6 @@
                                     </div>
                                 </div>
                             </form>
-                            {{--  <div class="row mb-2">
-                                <div class="col-md-1 mb-2">
-                                    <button type="submit" id="exportBtn" class="btn btn-block btn-success">PDF</button>
-                                </div>
-                            </div>  --}}
 
                             <br>
 
@@ -102,6 +103,12 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="showhide" id="showhide" value="chemical">
                                 <label class="form-check-label" for="inlineRadio2">Chemical</label>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-md-1 mb-2">
+                                    <button type="submit" id="exportBtn" class="btn btn-block btn-success">PDF</button>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -115,19 +122,19 @@
                         @foreach ($stock_report as $stock_reports)
                             <div class="col-md-4">
                                 <div class="card" style="width: 100%;">
-                                    <div class="card-body">
-                                        <p style="font-weight: bold; font-size: 20px">Jigar Machine :- {{$stock_reports->machine_name}}</p>
-                                        <p style="font-weight: bold; font-size: 20px">Person Name :- </p>
-                                        <p style="font-weight: bold; font-size: 20px">Date :- {{$stock_reports->excute_date}}</p>
-                                        <p style="font-weight: bold; font-size: 20px">Marka :- {{$stock_reports->marka}}</p>
+                                    <div class="card-body" style="margin: 0%; border: 1px solid">
+                                        <p style="font-weight: bold; font-size: 25px; margin:0%;">Jigar Machine :- {{$stock_reports->machine_name}}</p>
+                                        <p style="font-weight: bold; font-size: 25px; margin:0%;">Person Name :- </p>
+                                        <p style="font-weight: bold; font-size: 25px; margin:0%;">Date :- {{$stock_reports->excute_date}}</p>
+                                        <p style="font-weight: bold; font-size: 25px; margin:0%;">Marka :- {{$stock_reports->marka}}</p>
                                         <div class ="color">
-                                            <p class="card-title" style="font-weight: bold; font-size: 20px">Color :- </p>
-                                            <table class="table">
+                                            <p class="card-title" style="font-weight: bold; font-size: 25px; margin:0%;">Color :- </p>
+                                            <table class="table" style="margin: 0%">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="row">Name</th>
-                                                        <th scope="row">Meter</th>
-                                                        <th scope="row">Gram</th>
+                                                        <th scope="row" style="margin:0%; line-height:10px">Name</th>
+                                                        <th scope="row" style="margin:0%; line-height:10px">Meter</th>
+                                                        <th scope="row" style="margin:0%; line-height:10px">Gram</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -160,11 +167,11 @@
                                                     @endphp
                                                     @endforeach
                                                         <tr>
-                                                        <th scope="row" style="font-size: 20px">{{$stock_report_colors->color_name}}</th>
-                                                        <td class="fw-bold" style="font-size: 20px">{{$stock_meterial_consumption->qty}} Meter</td>
-                                                        <td class="fw-bold" style="font-size: 20px">{{$colorroundedgramstest}} GM</td>
+                                                        <th scope="row" style="font-size: 25px; margin: 0%; line-height:10px">{{$stock_report_colors->color_name}}</th>
+                                                        <td class="fw-bold" style="font-size: 25px; margin: 0%; line-height:10px">{{$stock_meterial_consumption->qty}} Meter</td>
+                                                        <td class="fw-bold" style="font-size: 25px; margin: 0% ;line-height:10px">{{$colorroundedgramstest}} GM</td>
                                                         </tr>
-                                                        <table class="table">
+                                                        <table class="table" style="margin: 0%">
                                                             <hr class="border-2 border-top" style="height: 3px; color:black" />
                                                             <tbody>
 
@@ -173,8 +180,8 @@
                                                                 $colorroundedgrams = $ColorCombinations->gram * $stock_meterial_consumption->qty * 10;
                                                                 @endphp
                                                                     <tr>
-                                                                    <th scope="row" style="font-size: 20px">{{$ColorCombinations->name}}</th>
-                                                                    <td class="fw-bold" style="font-size: 20px">{{$colorroundedgrams }} GM</td>
+                                                                    <th scope="row" style="font-size: 25px;margin: 0%; line-height:10px">{{$ColorCombinations->name}}</th>
+                                                                    <td class="fw-bold" style="font-size: 25px;margin: 0%; line-height:10px">{{$colorroundedgrams }} GM</td>
                                                                     </tr>
                                                                 @endforeach
                                                             </tbody>
@@ -185,12 +192,12 @@
                                         </div>
                                         <div class="chemical d-none">
                                             <p class="card-title">Chemical :- </p>
-                                            <table class="table">
+                                            <table class="table" style="margin: 0%">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="row">Name</th>
-                                                        <th scope="row">Meter</th>
-                                                        <th scope="row">Gram</th>
+                                                        <th scope="row" style="margin: 0%">Name</th>
+                                                        <th scope="row" style="margin: 0%">Meter</th>
+                                                        <th scope="row" style="margin: 0%">Gram</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -206,12 +213,12 @@
                                                     $chemicalroundedgram = number_format((float)$stock_report_chemicals->gram, 2, '.', '');
                                                     @endphp
                                                         <tr>
-                                                        <th scope="row" style="font-size: 20px">{{$stock_report_chemicals->name}}</th>
-                                                        <td class="fw-bold" style="font-size: 20px">{{$stock_meterial_consumption->qty}} Meter</td>
-                                                        <td class="fw-bold" style="font-size: 20px">{{$chemicalroundedgram * $stock_meterial_consumption->qty}} GM</td>
+                                                        <th scope="row" style="font-size: 25px; margin: 0%;">{{$stock_report_chemicals->name}}</th>
+                                                        <td class="fw-bold" style="font-size: 25px; margin: 0%;">{{$stock_meterial_consumption->qty}} Meter</td>
+                                                        <td class="fw-bold" style="font-size: 25px; margin: 0%;">{{$chemicalroundedgram * $stock_meterial_consumption->qty}} GM</td>
                                                         </tr>
-                                                        <table class="table">
-                                                            <hr class="border-2 border-top" style="height: 3px; size: 14px; color:black" />
+                                                        <table class="table" style="margin: 0%">
+                                                            <hr class="border-2 border-top" style="height: 3px; size: 14px; color:black;" />
                                                             <tbody>
                                                                 @php
                                                                     $ChemicalCombination = DB::table('chemical_combination')
@@ -226,8 +233,8 @@
                                                                 $colorroundedgram = number_format((float)$ChemicalCombinations->chemical_calculation, 2, '.', '');
                                                                 @endphp
                                                                     <tr>
-                                                                    <th scope="row" style="font-size: 20px">{{$ChemicalCombinations->name}}</th>
-                                                                    <td class="fw-bold" style="font-size: 20px">{{$colorroundedgram * $stock_meterial_consumption->qty}} {{$ChemicalCombinations->unit_code}}</td>
+                                                                    <th scope="row" style="font-size: 25px; margin: 0%; line-height:10px">{{$ChemicalCombinations->name}}</th>
+                                                                    <td class="fw-bold" style="font-size: 25px; margin: 0%; line-height:10px">{{$colorroundedgram * $stock_meterial_consumption->qty}} {{$ChemicalCombinations->unit_code}}</td>
                                                                     </tr>
                                                                 @endforeach
                                                             </tbody>
@@ -261,63 +268,26 @@
 
 
 
-
-<script type="text/javascript"
-    $(document).ready(function () {
-        $("#exportBtn").click(function () {
-            const { jsPDF } = window.jspdf;
-            let doc = new jsPDF("p", "mm", "a4");
-    
-            let content = document.getElementById("exportableContent");
-    
-            html2canvas(content, {
-                backgroundColor: null,
-                scale: 2,
-                useCORS: true
-            }).then((canvas) => {
-                let imgData = canvas.toDataURL("image/png");
-                let imgWidth = 190;
-                let pageHeight = 297; // A4 height in mm
-                let imgHeight = (canvas.height * imgWidth) / canvas.width;
-                let position = 10;
-                let heightLeft = imgHeight;
-    
-                doc.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight - position;
-    
-                let currentPage = 1;
-                while (heightLeft > 0) {
-                    doc.addPage();
-                    position = 10;
-                    let offset = (currentPage * (pageHeight - position) * canvas.height) / imgHeight;
-                    
-                    let croppedCanvas = cropCanvas(canvas, offset, canvas.width, (pageHeight * canvas.height) / imgHeight);
-                    let croppedImgData = croppedCanvas.toDataURL("image/png");
-                    let croppedImgHeight = (croppedCanvas.height * imgWidth) / croppedCanvas.width;
-    
-                    doc.addImage(croppedImgData, "PNG", 10, position, imgWidth, croppedImgHeight);
-                    heightLeft -= pageHeight;
-    
-                    currentPage++;
-                }
-    
-                doc.save("machine_report.pdf");
-            });
+<script type="text/javascript">
+    $("body").on("click", "#exportBtn", function () {
+        html2canvas($('#exportableContent')[0], {
+            scale: 2,  // This ensures the image quality is high.
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    pageSize: 'A4', // Set the page size to A4
+                    content: [{
+                        image: data,
+                        width: 500,
+                        margin: [0, 20, 0, 20]  // Add margin for proper spacing
+                    }],
+                    pageMargins: [40, 60, 40, 60], // Ensure proper margins around the page
+                    pageOrientation: 'portrait'  // Keeps the layout in portrait mode
+                };
+                pdfMake.createPdf(docDefinition).download("stock_report.pdf");
+            }
         });
-    
-        // Function to crop the canvas correctly
-        function cropCanvas(canvas, startY, width, height) {
-            let croppedCanvas = document.createElement("canvas");
-            croppedCanvas.width = width;
-            croppedCanvas.height = height;
-            let ctx = croppedCanvas.getContext("2d");
-    
-            ctx.drawImage(canvas, 0, startY, width, height, 0, 0, width, height);
-            return croppedCanvas;
-        }
     });
-    
-      
 
     $(document).ready(function(){
         $('input[type="radio"]').change(function(){
@@ -332,4 +302,5 @@
         });
     });
 </script>
+
 @endsection
