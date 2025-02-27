@@ -212,4 +212,32 @@ class StockReportController extends Controller
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
     }
+
+    public function generatePDF(Request $request)
+    {
+        // Get filter values from request
+        $startDate = $request->input('from');
+        $branch = $request->input('branch');
+        $showhide = $request->input('showhide');
+        
+        // Fetch machine reports based on filters
+        $stock_report = DB::table('stock_material_managemnt')
+            ->select(
+                'stock_material_managemnt.id',
+                'stock_material_managemnt.excute_date',
+                'stock_material_managemnt.marka',
+                'stock_material_managemnt.stock_material_managemnt_date',
+                'stock_material_managemnt.excute_date',
+                'stock_material_managemnt.machine_name'
+            )
+            ->where('stock_material_managemnt.excute_date', $startDate)
+            ->where('stock_material_managemnt.source_location', $branch)
+            ->get();
+
+        // Pass data to the PDF view
+        $pdf = Pdf::loadView('admin.stockreport.machine_report_pdf', compact('stock_report','showhide'));
+
+        // Download the generated PDF
+        return $pdf->download('machine_report.pdf');
+    }
 }

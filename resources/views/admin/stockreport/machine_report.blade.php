@@ -91,23 +91,28 @@
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </div>
                                 </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="showhide" id="showhide" value="color" checked>
+                                    <label class="form-check-label" for="inlineRadio1">Color</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="showhide" id="showhide" value="chemical">
+                                    <label class="form-check-label" for="inlineRadio2">Chemical</label>
+                                </div>
                             </form>
 
                             <br>
 
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="showhide" id="showhide" value="color" checked>
-                                <label class="form-check-label" for="inlineRadio1">Color</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="showhide" id="showhide" value="chemical">
-                                <label class="form-check-label" for="inlineRadio2">Chemical</label>
-                            </div>
-
                             <div class="row mb-2">
                                 <div class="col-md-1 mb-2">
-                                    <button type="submit" id="exportBtn" class="btn btn-block btn-success">PDF</button>
+                                    {{--  <button type="submit" id="exportBtn" class="btn btn-block btn-success">PDF</button>  --}}
+                                    <a id="exportPdf" href="{{ route('admin.export.pdf', [
+                                        'from' => request('from'), 
+                                        'branch' => request('branch'), 
+                                        'showhide' => request('showhide', 'color') 
+                                    ]) }}" class="btn btn-success">
+                                        PDF
+                                    </a>                                                                       
                                 </div>
                             </div>
                         </div>
@@ -267,9 +272,9 @@
 </div>
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-    $("body").on("click", "#exportBtn", function () {
+    {{--  $("body").on("click", "#exportBtn", function () {
         html2canvas($('#exportableContent')[0], {
             scale: 2,  // This ensures the image quality is high.
             onrendered: function (canvas) {
@@ -287,7 +292,23 @@
                 pdfMake.createPdf(docDefinition).download("stock_report.pdf");
             }
         });
+    });  --}}
+
+    $(document).ready(function() {
+        $('input[name="showhide"]').change(function() {
+            let selectedValue = $('input[name="showhide"]:checked').val();
+            let fromDate = $('#from').val();
+            let branch = $('#branch').val();
+            
+            let newHref = "{{ route('admin.export.pdf') }}" + 
+                "?from=" + encodeURIComponent(fromDate) + 
+                "&branch=" + encodeURIComponent(branch) + 
+                "&showhide=" + encodeURIComponent(selectedValue);
+            
+            $('#exportPdf').attr('href', newHref);
+        });
     });
+
 
     $(document).ready(function(){
         $('input[type="radio"]').change(function(){

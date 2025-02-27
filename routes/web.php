@@ -242,5 +242,5 @@ Route::name('admin.')->prefix('admin')->controller(StockReportController::class)
     Route::get('chemical_report_filter', 'chemical_report_filter')->name('chemical.report.filter');
     Route::get('machine_report', 'machine_report')->name('machine.report');
     Route::get('machine_report_filter', 'machine_report_filter')->name('machine.report.filter');
-    Route::get('export-pdf', 'exportPDF')->name('export.pdf');
+    Route::get('export-pdf', 'generatePDF')->name('export.pdf');
 });
